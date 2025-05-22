@@ -1,6 +1,6 @@
 <?php
 
-namespace Jack\Logmonitor\Facades;
+namespace Jack\LogMonitor\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jack\Logmonitor;
+namespace Jack\LogMonitor;
 
 use Illuminate\Support\ServiceProvider;
 

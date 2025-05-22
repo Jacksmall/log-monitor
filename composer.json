@@ -2,7 +2,7 @@
     "name": "jacksmall/log-monitor",
     "autoload": {
         "psr-4": {
-            "Jack\\Logmonitor\\": "src/"
+            "Jack\\LogMonitor\\": "src/"
         }
     },
     "authors": [
@@ -14,10 +14,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Jack\\Logmonitor\\LogMonitorServiceProvider"
+                "Jack\\LogMonitor\\LogMonitorServiceProvider"
             ],
             "aliases": {
-                "LogMonitor": "Jack\\Logmonitor\\Facades\\LogMonitor"
+                "LogMonitor": "Jack\\LogMonitor\\Facades\\LogMonitor"
             }
         }
     }

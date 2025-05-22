@@ -1,6 +1,6 @@
 <?php
 
-namespace Jack\Logmonitor;
+namespace Jack\LogMonitor;
 
 use Exception;
 use Illuminate\Support\Facades\Redis;
