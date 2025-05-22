@@ -1,0 +1,24 @@
+{
+    "name": "jack/logmonitor",
+    "autoload": {
+        "psr-4": {
+            "Jack\\Logmonitor\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "chenkuan",
+            "email": "812254315@qq.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jack\\LogMonitor\\LogMonitorServiceProvider"
+            ],
+            "aliases": {
+                "LogMonitor": "Jack\\LogMonitor\\Facades\\LogMonitor"
+            }
+        }
+    }
+}
