@@ -14,10 +14,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Jack\\LogMonitor\\LogMonitorServiceProvider"
+                "Jack\\Logmonitor\\LogMonitorServiceProvider"
             ],
             "aliases": {
-                "LogMonitor": "Jack\\LogMonitor\\Facades\\LogMonitor"
+                "LogMonitor": "Jack\\Logmonitor\\Facades\\LogMonitor"
             }
         }
     }
