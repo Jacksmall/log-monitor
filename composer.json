@@ -1,5 +1,5 @@
 {
-    "name": "Jacksmall/log-monitor",
+    "name": "jacksmall/log-monitor",
     "autoload": {
         "psr-4": {
             "Jack\\Logmonitor\\": "src/"
