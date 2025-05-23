@@ -10,30 +10,46 @@ class LogMonitor
     protected $redisConnection;
     protected $redisKey;
     protected $maxLength;
+    protected $data = [];
 
     public function __construct($connection, $key, $maxLength)
     {
         $this->redisConnection = $connection;
         $this->redisKey = $key;
         $this->maxLength = $maxLength;
+        $this->initData();
+    }
+
+    protected function initData()
+    {
+        $this->data = [
+            'timestamp' => microtime(true),
+            'host'      => gethostname(),
+            'env'       => app()->environment()
+        ];
+    }
+
+    public function set($name, $value)
+    {
+        $this->data[$name] = $value;
+        return $this;
+    }
+
+    public function get($name, $default = null)
+    {
+        return $this->data[$name] ?? $default;
     }
 
     public function log($level, $message, array $context = [])
     {
-        $logData = json_encode([
-            'timestamp' => microtime(true),
-            'level'     => $level,
-            'message'   => $message,
-            'context'   => $context,
-            'host'      => gethostname(),
-            'env'       => app()->environment()
-        ]);
+        $this->set('level', $level);
+        $this->set('message', $message);
+        $this->set('context', $context);
 
-        Redis::connection($this->redisConnection)
-            ->pipeline(function ($pipe) use ($logData) {
-                $pipe->lpush($this->redisKey, $logData);
-                $pipe->ltrim($this->redisKey, 0, $this->maxLength - 1);
-            });
+        Redis::connection($this->redisConnection)->pipeline(function ($pipe) {
+            $pipe->lpush($this->redisKey, $this->data);
+            $pipe->ltrim($this->redisKey, 0, $this->maxLength - 1);
+        });
     }
 
     public function catchException(Exception $exception)
