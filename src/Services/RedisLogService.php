@@ -11,20 +11,20 @@ class RedisLogService implements LogInterface
     protected $maxLength;
     protected $data = [];
 
-    public function __construct($type, $data)
+    public function __construct($type)
     {
         $config = config('logmonitor.'.$type);
         $this->redisConnection = $config['connection'];
         $this->redisKey = $config['key'];
         $this->maxLength = $config['max_length'];
-        $this->data = $data;
     }
 
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = [], array $data = [])
     {
         $this->data['level'] = $level;
         $this->data['message'] = $message;
         $this->data['context'] = $context;
+        $this->data = array_merge($this->data, $data);
 
         Redis::connection($this->redisConnection)->pipeline(function ($pipe) {
             $pipe->lpush($this->redisKey, json_encode($this->data, JSON_UNESCAPED_UNICODE));

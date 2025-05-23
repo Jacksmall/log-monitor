@@ -6,8 +6,6 @@ use Exception;
 
 class LogMonitor
 {
-    private $type = 'redis';
-
     private $data = [];
 
     public function __construct()
@@ -38,16 +36,11 @@ class LogMonitor
         return $this->data[$name] ?? $default;
     }
 
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
     public function log($level, $message, $context = [])
     {
         /** @var AbstractLogFactory $factory */
-        $factory = app()->make(AbstractLogFactory::class, ['type' => $this->type, 'data' => $this->data]);
-        $factory->log($level, $message, $context);
+        $factory = app()->make(AbstractLogFactory::class);
+        $factory->log($level, $message, $context, $this->data);
     }
 
     public function catchException(Exception $exception)

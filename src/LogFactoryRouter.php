@@ -14,11 +14,10 @@ class LogFactoryRouter
 
     /**
      * @param $type
-     * @param $data
      * @return mixed
      * @throws \Exception
      */
-    public static function createFactory($type, $data)
+    public static function createFactory($type)
     {
         if (isset(self::$cachedFactories[$type])) {
             return self::$cachedFactories[$type];
@@ -29,7 +28,7 @@ class LogFactoryRouter
         }
 
         $factoryName = self::MAPPING[$type];
-        $factory = new $factoryName($data);
+        $factory = new $factoryName();
 
         return self::$cachedFactories[$type] = $factory;
     }

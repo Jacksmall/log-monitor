@@ -6,9 +6,6 @@ use Jack\LogMonitor\Services\LogInterface;
 
 abstract class AbstractLogFactory
 {
-    public $data;
-    public $type;
-
     /**
      * @return LogInterface
      */
@@ -20,11 +17,12 @@ abstract class AbstractLogFactory
      * @param $level
      * @param $message
      * @param array $context
+     * @param array $data
      * @return mixed
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = [], array $data = [])
     {
         $log = $this->createLogger();
-        return $log->log($level, $message, $context);
+        return $log->log($level, $message, $context, $data);
     }
 }

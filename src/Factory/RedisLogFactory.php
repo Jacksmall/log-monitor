@@ -8,16 +8,11 @@ use Jack\LogMonitor\Services\RedisLogService;
 
 class RedisLogFactory extends AbstractLogFactory
 {
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
-
     /**
      * @inheritDoc
      */
     public function createLogger(): LogInterface
     {
-        return new RedisLogService('redis', $this->data);
+        return new RedisLogService('redis');
     }
 }
