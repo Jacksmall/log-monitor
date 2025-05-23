@@ -46,7 +46,7 @@ class LogMonitor
     public function log($level, $message, $context = [])
     {
         /** @var AbstractLogFactory $factory */
-        $factory = app(AbstractLogFactory::class, ['type' => $this->type, 'data' => $this->data]);
+        $factory = app()->make(AbstractLogFactory::class, ['type' => $this->type, 'data' => $this->data]);
         $factory->log($level, $message, $context);
     }
 

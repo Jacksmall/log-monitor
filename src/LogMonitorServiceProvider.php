@@ -10,7 +10,7 @@ class LogMonitorServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/logmonitor.php', 'logmonitor');
         $this->app->bind(AbstractLogFactory::class, function ($app, $params) {
-            return LogFactoryRouter::createFactory($params['type'], $params['data']);
+            return LogFactoryRouter::createFactory(config('logmonitor.default'), $params['data']);
         });
     }
 
