@@ -13,7 +13,7 @@ class RedisLogService implements LogInterface
 
     public function __construct($type)
     {
-        $config = config('logmonitor.'.$type);
+        $config = config('logmonitor.channels.'.$type);
         $this->redisConnection = $config['connection'];
         $this->redisKey = $config['key'];
         $this->maxLength = $config['max_length'];
