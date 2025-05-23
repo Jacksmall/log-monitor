@@ -47,7 +47,7 @@ class LogMonitor
         $this->set('context', $context);
 
         Redis::connection($this->redisConnection)->pipeline(function ($pipe) {
-            $pipe->lpush($this->redisKey, $this->data);
+            $pipe->lpush($this->redisKey, json_encode($this->data, JSON_UNESCAPED_UNICODE));
             $pipe->ltrim($this->redisKey, 0, $this->maxLength - 1);
         });
     }
