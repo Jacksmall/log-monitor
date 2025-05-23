@@ -3,23 +3,21 @@
 namespace Jack\LogMonitor;
 
 use Exception;
-use Illuminate\Support\Facades\Redis;
 
 class LogMonitor
 {
-    protected $redisConnection;
-    protected $redisKey;
-    protected $maxLength;
-    protected $data = [];
+    private $type = 'redis';
 
-    public function __construct($connection, $key, $maxLength)
+    private $data = [];
+
+    public function __construct()
     {
-        $this->redisConnection = $connection;
-        $this->redisKey = $key;
-        $this->maxLength = $maxLength;
         $this->initData();
     }
 
+    /**
+     * @return void
+     */
     protected function initData()
     {
         $this->data = [
@@ -40,16 +38,16 @@ class LogMonitor
         return $this->data[$name] ?? $default;
     }
 
-    public function log($level, $message, array $context = [])
+    public function setType($type)
     {
-        $this->set('level', $level);
-        $this->set('message', $message);
-        $this->set('context', $context);
+        $this->type = $type;
+    }
 
-        Redis::connection($this->redisConnection)->pipeline(function ($pipe) {
-            $pipe->lpush($this->redisKey, json_encode($this->data, JSON_UNESCAPED_UNICODE));
-            $pipe->ltrim($this->redisKey, 0, $this->maxLength - 1);
-        });
+    public function log($level, $message, $context = [])
+    {
+        /** @var AbstractLogFactory $factory */
+        $factory = app(AbstractLogFactory::class, ['type' => $this->type, 'data' => $this->data]);
+        $factory->log($level, $message, $context);
     }
 
     public function catchException(Exception $exception)
