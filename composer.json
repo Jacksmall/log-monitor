@@ -1,5 +1,7 @@
 {
     "name": "jacksmall/log-monitor",
+     "description": "一个laravel 记录日志插件",
+      "license": "MIT",
     "autoload": {
         "psr-4": {
             "Jack\\LogMonitor\\": "src/"
